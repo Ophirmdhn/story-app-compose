@@ -4,8 +4,8 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
-import com.ophi.storyappcompose.story.data.repository.AuthRepository
 import com.ophi.storyappcompose.story.domain.model.LoginResponse
+import com.ophi.storyappcompose.story.domain.repository.AuthRepository
 import com.ophi.storyappcompose.story.presentation.util.AuthState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,8 +21,6 @@ class LoginViewModel @Inject constructor(
 
     private val _uiState : MutableStateFlow<AuthState<LoginResponse>> =
         MutableStateFlow(AuthState.Unauthorized)
-
-//    val uiState = _uiState.asStateFlow()
 
     val uiState: MutableStateFlow<AuthState<LoginResponse>>
         get() = _uiState
