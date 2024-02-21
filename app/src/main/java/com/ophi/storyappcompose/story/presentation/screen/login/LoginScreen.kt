@@ -45,12 +45,15 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
+import com.ophi.storyappcompose.story.presentation.navigation.Screen
 import com.ophi.storyappcompose.story.presentation.util.AuthState
 import com.ophi.storyappcompose.story.presentation.util.component.Loading
 
 @Suppress("NAME_SHADOWING")
 @Composable
 fun LoginScreen(
+    navController: NavHostController,
     modifier: Modifier = Modifier,
     viewModel: LoginViewModel = hiltViewModel()
 ) {
@@ -91,6 +94,7 @@ fun LoginScreen(
             is AuthState.Success -> {
                 Toast.makeText(context, "Login Berhasil", Toast.LENGTH_SHORT).show()
                 Log.d("Login", "Login Berhasil")
+                navController.navigate(Screen.Home.route)
                 isLoading.value = false
             }
 
