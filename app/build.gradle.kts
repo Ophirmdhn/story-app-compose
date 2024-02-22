@@ -31,6 +31,11 @@ android {
             )
         }
     }
+
+    buildFeatures {
+        buildConfig = true
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_17
@@ -72,6 +77,7 @@ dependencies {
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
 
     // Dagger Hilt
     implementation("com.google.dagger:hilt-android:2.48")
@@ -82,8 +88,11 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.5.0")
 
     // Extended Icon
-    implementation("androidx.compose.material:material-icons-extended:1.6.1")
+    implementation("androidx.compose.material:material-icons-extended:1.6.2")
 
     // Navigation
     implementation("androidx.navigation:navigation-compose:2.7.7")
+
+    // Data Store
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
 }

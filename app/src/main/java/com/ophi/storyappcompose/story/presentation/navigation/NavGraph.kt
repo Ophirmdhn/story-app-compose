@@ -29,13 +29,14 @@ fun NavGraph(
     Scaffold(
         bottomBar = {
             if (currentRoute !in listOf(
-                Screen.Login.route
+                Screen.Login.route,
             )) {
                 BottomBar(navController)
             }
         },
         modifier = modifier
     ) { innerPadding ->
+
         NavHost(
             navController = navController,
             startDestination = Screen.Home.route,
@@ -45,7 +46,7 @@ fun NavGraph(
                 LoginScreen(navController)
             }
             composable(Screen.Home.route) {
-                HomeScreen()
+                HomeScreen(navController)
             }
             composable(Screen.Story.route) {
                 StoryScreen()

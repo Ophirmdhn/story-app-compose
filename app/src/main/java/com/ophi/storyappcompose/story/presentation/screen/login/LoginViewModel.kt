@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import com.ophi.storyappcompose.story.domain.model.LoginResponse
+import com.ophi.storyappcompose.story.domain.pref.UserModel
 import com.ophi.storyappcompose.story.domain.repository.AuthRepository
 import com.ophi.storyappcompose.story.presentation.util.AuthState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -36,6 +37,13 @@ class LoginViewModel @Inject constructor(
                     .collect {
                         if (!it.error) {
                             _uiState.value = AuthState.Success(it)
+                            saveSession(
+                                UserModel(
+                                    name = it.loginResult.name,
+                                    token = it.loginResult.token,
+                                    isLogin = true
+                                )
+                            )
                             Log.d("Login Success", it.loginResult.token)
                         } else {
                             _uiState.value = AuthState.Error("Login Failed")
@@ -47,6 +55,12 @@ class LoginViewModel @Inject constructor(
                 val errorResponse = Gson().fromJson(errorBody, LoginResponse::class.java)
                 _uiState.value = AuthState.Error(errorResponse.message)
             }
+        }
+    }
+
+    private fun saveSession(user: UserModel) {
+        viewModelScope.launch {
+            repository.saveSession(user)
         }
     }
 }

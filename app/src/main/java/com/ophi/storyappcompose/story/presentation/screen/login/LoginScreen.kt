@@ -92,8 +92,8 @@ fun LoginScreen(
             }
 
             is AuthState.Success -> {
-                Toast.makeText(context, "Login Berhasil", Toast.LENGTH_SHORT).show()
-                Log.d("Login", "Login Berhasil")
+                Toast.makeText(context, "Login Success", Toast.LENGTH_SHORT).show()
+                Log.d("Login", "Login Success")
                 navController.navigate(Screen.Home.route)
                 isLoading.value = false
             }
