@@ -6,7 +6,7 @@ import androidx.datastore.preferences.core.Preferences
 import com.ophi.storyappcompose.story.data.remote.ApiConfig
 import com.ophi.storyappcompose.story.data.remote.ApiService
 import com.ophi.storyappcompose.story.domain.pref.UserPreference
-import com.ophi.storyappcompose.util.userDataStore
+import com.ophi.storyappcompose.util.dataStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,6 +33,6 @@ object AppModule {
     @Singleton
     @Provides
     fun provideDataStore(@ApplicationContext context: Context): DataStore<Preferences> {
-        return context.userDataStore
+        return context.dataStore
     }
 }

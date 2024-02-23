@@ -1,4 +1,4 @@
-package com.ophi.storyappcompose.story.presentation.screen.story
+package com.ophi.storyappcompose.story.presentation.screen.add_story
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,12 +17,12 @@ import com.ophi.storyappcompose.story.presentation.util.component.TopBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun StoryScreen(
+fun AddStoryScreen(
     modifier: Modifier = Modifier
 ) {
     Scaffold(
         topBar = {
-            TopBar(title = "Story")
+            TopBar(title = "Add Story")
         },
         modifier = modifier
     ) { innerPadding ->
@@ -33,19 +33,19 @@ fun StoryScreen(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-            StoryContent()
+            AddStoryContent()
         }
     }
 }
 
 @Composable
-fun StoryContent(
+fun AddStoryContent(
     modifier: Modifier = Modifier
 ) {
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center,
     ) {
-        Text(text = "Story")
+        Text(text = "Add Story")
     }
 }

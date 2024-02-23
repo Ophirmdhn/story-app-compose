@@ -46,7 +46,7 @@ fun BottomBar(
                 title = "Add Stories",
                 icon = Icons.Outlined.AddCircleOutline,
                 iconActive = Icons.Filled.AddCircle,
-                screen = Screen.Story
+                screen = Screen.AddStory
             ),
             NavigationItem(
                 title = "Maps",

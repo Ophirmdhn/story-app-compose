@@ -1,6 +1,5 @@
-package com.ophi.storyappcompose.story.presentation.screen.home
+package com.ophi.storyappcompose.story.presentation.screen.splash
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ophi.storyappcompose.story.domain.pref.UserModel
@@ -14,7 +13,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+class SplashViewModel @Inject constructor(
     private val repository: AuthRepository
 ) : ViewModel() {
 
@@ -24,23 +23,15 @@ class HomeViewModel @Inject constructor(
     val uiState: StateFlow<UiState<UserModel>>
         get() = _uiState
 
-
     fun getUser() {
         viewModelScope.launch{
             repository.getSession()
                 .catch {
                     _uiState.value = UiState.Error(it.message.toString())
                 }
-                .collect { user ->
-                    Log.d("HomeViewModel", "Mengambil data User: name=${user.name}, token=${user.token}")
-                    _uiState.value = UiState.Success(user)
+                .collect {
+                    _uiState.value = UiState.Success(it)
                 }
-        }
-    }
-
-    fun logout() {
-        viewModelScope.launch {
-            repository.logout()
         }
     }
 }

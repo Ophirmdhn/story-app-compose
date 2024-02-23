@@ -12,9 +12,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.ophi.storyappcompose.story.presentation.navigation.component.BottomBar
+import com.ophi.storyappcompose.story.presentation.screen.add_story.AddStoryScreen
 import com.ophi.storyappcompose.story.presentation.screen.home.HomeScreen
 import com.ophi.storyappcompose.story.presentation.screen.login.LoginScreen
 import com.ophi.storyappcompose.story.presentation.screen.maps.MapsScreen
+import com.ophi.storyappcompose.story.presentation.screen.splash.SplashScreen
 import com.ophi.storyappcompose.story.presentation.screen.story.StoryScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -30,29 +32,36 @@ fun NavGraph(
         bottomBar = {
             if (currentRoute !in listOf(
                 Screen.Login.route,
+                Screen.Splash.route
+//                Screen.Story.route
             )) {
                 BottomBar(navController)
             }
         },
         modifier = modifier
     ) { innerPadding ->
-
         NavHost(
             navController = navController,
-            startDestination = Screen.Home.route,
+            startDestination = Screen.Splash.route,
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable(Screen.Login.route) {
-                LoginScreen(navController)
-            }
             composable(Screen.Home.route) {
                 HomeScreen(navController)
             }
-            composable(Screen.Story.route) {
-                StoryScreen()
+            composable(Screen.Login.route) {
+                LoginScreen(navController)
+            }
+//            composable(Screen.Story.route) {
+//                StoryScreen()
+//            }
+            composable(Screen.AddStory.route) {
+                AddStoryScreen()
             }
             composable(Screen.Maps.route) {
                 MapsScreen()
+            }
+            composable(Screen.Splash.route) {
+                SplashScreen(navController)
             }
         }
     }

@@ -7,6 +7,7 @@ import com.ophi.storyappcompose.story.domain.pref.UserPreference
 import com.ophi.storyappcompose.story.domain.repository.AuthRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
@@ -14,18 +15,34 @@ class AuthRepositoryImpl @Inject constructor(
     private val userPreference: UserPreference
 ) : AuthRepository {
     override suspend fun login(email: String, password: String): Flow<LoginResponse> {
-        return flowOf(apiService.login(email, password))
+        return flowOf(apiService.login(email, password)).onEach { loginResponse ->
+            if (!loginResponse.error) {
+                saveSession(
+                    UserModel(
+                        name = loginResponse.loginResult.name,
+                        token = loginResponse.loginResult.token,
+                        isLogin = true
+                    )
+                )
+            }
+        }
     }
+
 
     override suspend fun saveSession(user: UserModel) {
         userPreference.saveSession(user)
     }
 
-    override suspend fun getSession(): Flow<UserModel> {
+    override fun getSession(): Flow<UserModel> {
         return userPreference.getSession()
     }
 
     override suspend fun logout() {
         userPreference.logout()
     }
+
+//    override suspend fun getStories(): Flow<StoryResponse> {
+//        return flowOf(apiService.getStories())
+//    }
+
 }

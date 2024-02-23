@@ -1,5 +1,6 @@
 package com.ophi.storyappcompose.story.domain.pref
 
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
@@ -30,12 +31,15 @@ class UserPreference @Inject constructor(
             preferences[NAME_KEY] = user.name
             preferences[TOKEN_KEY] = user.token
             preferences[IS_LOGIN_KEY] = true
+            Log.d("User Preference : ", "Menyimpan data User: name=$user.name, token=${user.token}")
         }
     }
 
     suspend fun logout() {
         dataStore.edit { preferences ->
-            preferences.clear()
+            preferences[NAME_KEY] = ""
+            preferences[TOKEN_KEY] = ""
+            preferences[IS_LOGIN_KEY] = false
         }
     }
 
