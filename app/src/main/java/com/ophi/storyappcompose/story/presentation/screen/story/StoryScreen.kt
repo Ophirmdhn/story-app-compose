@@ -1,5 +1,6 @@
 package com.ophi.storyappcompose.story.presentation.screen.story
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -12,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
 import com.ophi.storyappcompose.story.domain.model.ListStoryItem
 import com.ophi.storyappcompose.story.presentation.screen.story.component.StoryCard
 import com.ophi.storyappcompose.story.presentation.util.UiState
@@ -28,7 +28,8 @@ fun StoryScreen(
         when (state) {
             is UiState.Loading -> {
                 Loading()
-//                viewModel.getStories()
+                viewModel.getStories()
+                Log.d("Story Screen", "berhasil mengambil data story")
             }
 
             is UiState.Success -> {
@@ -36,10 +37,12 @@ fun StoryScreen(
                     modifier = modifier,
                     story = state.data.listStory
                 )
+                Log.d("Story Screen", "Menampilkan data story")
             }
 
             is UiState.Error -> {
                 Toast.makeText(LocalContext.current, state.errorMessage, Toast.LENGTH_LONG).show()
+                Log.d("Story Screen", "Gagal mengambil data story")
             }
         }
     }

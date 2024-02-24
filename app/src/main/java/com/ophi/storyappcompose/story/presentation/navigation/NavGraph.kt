@@ -32,8 +32,8 @@ fun NavGraph(
         bottomBar = {
             if (currentRoute !in listOf(
                 Screen.Login.route,
-                Screen.Splash.route
-//                Screen.Story.route
+                Screen.Splash.route,
+                Screen.Story.route
             )) {
                 BottomBar(navController)
             }
@@ -45,23 +45,23 @@ fun NavGraph(
             startDestination = Screen.Splash.route,
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable(Screen.Home.route) {
-                HomeScreen(navController)
+            composable(Screen.Splash.route) {
+                SplashScreen(navController)
             }
             composable(Screen.Login.route) {
                 LoginScreen(navController)
             }
-//            composable(Screen.Story.route) {
-//                StoryScreen()
-//            }
+            composable(Screen.Home.route) {
+                HomeScreen(navController)
+            }
+            composable(Screen.Story.route) {
+                StoryScreen()
+            }
             composable(Screen.AddStory.route) {
                 AddStoryScreen()
             }
             composable(Screen.Maps.route) {
                 MapsScreen()
-            }
-            composable(Screen.Splash.route) {
-                SplashScreen(navController)
             }
         }
     }

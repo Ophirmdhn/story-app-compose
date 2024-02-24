@@ -2,6 +2,7 @@ package com.ophi.storyappcompose.story.data.repository
 
 import com.ophi.storyappcompose.story.data.remote.ApiService
 import com.ophi.storyappcompose.story.domain.model.LoginResponse
+import com.ophi.storyappcompose.story.domain.model.StoryResponse
 import com.ophi.storyappcompose.story.domain.pref.UserModel
 import com.ophi.storyappcompose.story.domain.pref.UserPreference
 import com.ophi.storyappcompose.story.domain.repository.AuthRepository
@@ -41,8 +42,8 @@ class AuthRepositoryImpl @Inject constructor(
         userPreference.logout()
     }
 
-//    override suspend fun getStories(): Flow<StoryResponse> {
-//        return flowOf(apiService.getStories())
-//    }
+    override suspend fun getStories(): Flow<StoryResponse> {
+        return flowOf(apiService.getStories())
+    }
 
 }

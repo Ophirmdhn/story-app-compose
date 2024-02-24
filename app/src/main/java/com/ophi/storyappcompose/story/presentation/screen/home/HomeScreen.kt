@@ -64,7 +64,7 @@ fun HomeScreen(
                         Column(
                             modifier = Modifier.padding(innerPadding)
                         ) {
-//                            StoryScreen(navController = navController)
+                            StoryScreen()
                         }
                     }
                     Log.d("Home Screen :", "Berhasil mengambil data user : name=${state.data}")

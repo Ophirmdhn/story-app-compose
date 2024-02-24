@@ -23,15 +23,15 @@ class StoryViewModel @Inject constructor(
     val storyState: StateFlow<UiState<StoryResponse>>
         get() = _storyState
 
-//    fun getStories() {
-//        viewModelScope.launch {
-//            repository.getStories()
-//                .catch {
-//                    _storyState.value = UiState.Error(it.message.toString())
-//                }
-//                .collect {
-//                    _storyState.value = UiState.Success(it)
-//                }
-//        }
-//    }
+    fun getStories() {
+        viewModelScope.launch {
+            repository.getStories()
+                .catch {
+                    _storyState.value = UiState.Error(it.message.toString())
+                }
+                .collect {
+                    _storyState.value = UiState.Success(it)
+                }
+        }
+    }
 }
