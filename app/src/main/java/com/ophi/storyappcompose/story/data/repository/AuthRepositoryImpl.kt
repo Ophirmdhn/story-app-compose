@@ -12,8 +12,8 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
-    private val apiService: ApiService,
-    private val userPreference: UserPreference
+    private val userPreference: UserPreference,
+    private val apiService: ApiService
 ) : AuthRepository {
     override suspend fun login(email: String, password: String): Flow<LoginResponse> {
         return flowOf(apiService.login(email, password)).onEach { loginResponse ->
@@ -28,7 +28,6 @@ class AuthRepositoryImpl @Inject constructor(
             }
         }
     }
-
 
     override suspend fun saveSession(user: UserModel) {
         userPreference.saveSession(user)

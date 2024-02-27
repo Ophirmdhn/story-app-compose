@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
+import com.ophi.storyappcompose.story.data.repository.AuthRepositoryImpl
 import com.ophi.storyappcompose.story.domain.model.LoginResponse
 import com.ophi.storyappcompose.story.domain.repository.AuthRepository
 import com.ophi.storyappcompose.story.presentation.util.AuthState
@@ -40,7 +41,7 @@ class LoginViewModel @Inject constructor(
                             Log.d("LoginViewModel : Success", it.loginResult.token)
                         } else {
                             _uiState.value = AuthState.Error("Login Failed")
-                            Log.d("LoginViewModel : ", "Gagal Login")
+                            Log.e("LoginViewModel : ", "Gagal Login")
                         }
                     }
             } catch (e: HttpException) {

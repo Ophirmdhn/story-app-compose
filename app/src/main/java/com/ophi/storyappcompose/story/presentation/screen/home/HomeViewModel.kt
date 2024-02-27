@@ -24,7 +24,6 @@ class HomeViewModel @Inject constructor(
     val uiState: StateFlow<UiState<UserModel>>
         get() = _uiState
 
-
     fun getUser() {
         viewModelScope.launch{
             repository.getSession()
@@ -32,7 +31,7 @@ class HomeViewModel @Inject constructor(
                     _uiState.value = UiState.Error(it.message.toString())
                 }
                 .collect { user ->
-                    Log.d("HomeViewModel", "Mengambil data User: name=${user.name}, token=${user.token}")
+                    Log.d("HomeViewModel :", "Mengambil data User: name = ${user.name}, token = ${user.token} isLogin = ${user.isLogin}")
                     _uiState.value = UiState.Success(user)
                 }
         }

@@ -55,7 +55,7 @@ fun HomeScreen(
                                         popUpTo(Screen.Home.route) { inclusive = true}
                                         popUpTo(Screen.Splash.route) { inclusive = true}
                                     }
-                                    Log.d("Home Screen : ", "Menghapus token/sesi")
+                                    Log.d("Home Screen :", "Menghapus token/sesi")
                                 }
                             )
                         },
@@ -67,12 +67,12 @@ fun HomeScreen(
                             StoryScreen()
                         }
                     }
-                    Log.d("Home Screen :", "Berhasil mengambil data user : name=${state.data}")
+                    Log.d("Home Screen :", "Berhasil mengambil data user : name = ${state.data}")
                 } else {
                     navController.navigate(Screen.Login.route) {
                         popUpTo(Screen.Home.route) { inclusive = true}
                     }
-                    Log.d("Home Screen :", "Gagal mengambil data user")
+                    Log.e("Home Screen :", "Gagal mengambil data user")
                 }
             }
 

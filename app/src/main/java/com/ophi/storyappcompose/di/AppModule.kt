@@ -1,10 +1,9 @@
 package com.ophi.storyappcompose.di
 
 import android.content.Context
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
+import android.util.Log
 import com.ophi.storyappcompose.story.data.remote.ApiConfig
-import com.ophi.storyappcompose.story.data.remote.ApiService
+import com.ophi.storyappcompose.story.data.repository.AuthRepositoryImpl
 import com.ophi.storyappcompose.story.domain.pref.UserPreference
 import com.ophi.storyappcompose.util.dataStore
 import dagger.Module
@@ -12,27 +11,44 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
-import javax.inject.Singleton
 
-
-@InstallIn(SingletonComponent::class)
 @Module
+@InstallIn(SingletonComponent::class)
 object AppModule {
 
-    @Singleton
     @Provides
-    fun provideApi(dataStore: UserPreference): ApiService {
-        val user = runBlocking {
-            dataStore.getSession().first()
+    fun provideUserPreference(@ApplicationContext context: Context): UserPreference {
+        try {
+            return UserPreference(context.dataStore)
+        } catch (e: Exception) {
+            Log.e("AppModule", "Error providing UserPreference ${e.message}", e)
+            throw e
         }
-        return ApiConfig.getApiService(user.token)
     }
 
-    @Singleton
     @Provides
-    fun provideDataStore(@ApplicationContext context: Context): DataStore<Preferences> {
-        return context.dataStore
+    fun provideApiConfig(): ApiConfig {
+        try {
+            return ApiConfig()
+        } catch (e: Exception) {
+            Log.e("AppModule", "Error providing ApiConfig: ${e.message}", e)
+            throw e
+        }
+    }
+
+    @Provides
+    fun provideAuthRepository(@ApplicationContext context: Context): AuthRepositoryImpl {
+        val userPreference = provideUserPreference(context)
+        val apiService = provideApiConfig().getApiService(context)
+
+        try {
+            return AuthRepositoryImpl(
+                userPreference,
+                apiService
+            )
+        } catch (e: Exception) {
+            Log.e("AppModule", "Error providing AuthRepository: ${e.message}", e)
+            throw e
+        }
     }
 }

@@ -26,23 +26,27 @@ fun StoryScreen(
 
     viewModel.storyState.collectAsState(UiState.Loading).value.let { state ->
         when (state) {
-            is UiState.Loading -> {
-                Loading()
-                viewModel.getStories()
-                Log.d("Story Screen", "berhasil mengambil data story")
+            is UiState.Success -> {
+                if (!state.data.error) {
+                    StoryContent(
+                        modifier = modifier,
+                        story = state.data.listStory
+                    )
+                    Log.d("Story Screen", "Berhasil mengambil data story ${state.data.listStory}")
+                } else {
+                    Log.e("Story Screen", "Gagal mengambil data story ${state.data.listStory}")
+                    Toast.makeText(LocalContext.current, state.data.message, Toast.LENGTH_LONG).show()
+                }
             }
 
-            is UiState.Success -> {
-                StoryContent(
-                    modifier = modifier,
-                    story = state.data.listStory
-                )
-                Log.d("Story Screen", "Menampilkan data story")
+            is UiState.Loading -> {
+                viewModel.getStories()
+                Loading()
             }
 
             is UiState.Error -> {
                 Toast.makeText(LocalContext.current, state.errorMessage, Toast.LENGTH_LONG).show()
-                Log.d("Story Screen", "Gagal mengambil data story")
+                Log.e("Story Screen", "Gagal mengambil data story")
             }
         }
     }
