@@ -30,6 +30,7 @@ import com.ophi.storyappcompose.story.presentation.screen.story.StoryScreen
 import com.ophi.storyappcompose.story.presentation.util.UiState
 import com.ophi.storyappcompose.story.presentation.util.component.Loading
 import com.ophi.storyappcompose.ui.theme.StoryAppComposeTheme
+import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -53,7 +54,7 @@ fun HomeScreen(
                                     navController.navigate(Screen.Login.route) {
                                         viewModel.logout()
                                         popUpTo(Screen.Home.route) { inclusive = true}
-                                        popUpTo(Screen.Splash.route) { inclusive = true}
+                                        popUpTo(Screen.Login.route) { inclusive = true}
                                     }
                                     Log.d("Home Screen :", "Menghapus token/sesi")
                                 }

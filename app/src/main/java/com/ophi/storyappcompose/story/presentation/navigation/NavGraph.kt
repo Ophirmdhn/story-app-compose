@@ -5,7 +5,9 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -16,23 +18,24 @@ import com.ophi.storyappcompose.story.presentation.screen.add_story.AddStoryScre
 import com.ophi.storyappcompose.story.presentation.screen.home.HomeScreen
 import com.ophi.storyappcompose.story.presentation.screen.login.LoginScreen
 import com.ophi.storyappcompose.story.presentation.screen.maps.MapsScreen
-import com.ophi.storyappcompose.story.presentation.screen.splash.SplashScreen
 import com.ophi.storyappcompose.story.presentation.screen.story.StoryScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NavGraph(
     modifier: Modifier = Modifier,
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController = rememberNavController(),
+    viewModel: NavViewModel = hiltViewModel()
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
+
+    val user by viewModel.getUser().observeAsState()
 
     Scaffold(
         bottomBar = {
             if (currentRoute !in listOf(
                 Screen.Login.route,
-                Screen.Splash.route,
                 Screen.Story.route
             )) {
                 BottomBar(navController)
@@ -42,12 +45,9 @@ fun NavGraph(
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = Screen.Splash.route,
+            startDestination = if (user?.isLogin == false) Screen.Login.route else Screen.Home.route,
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable(Screen.Splash.route) {
-                SplashScreen(navController)
-            }
             composable(Screen.Login.route) {
                 LoginScreen(navController)
             }
